@@ -127,7 +127,12 @@ int main(){
 
     cvWaitKey();
 
-	cout << "Hello world!" << endl;
+	cvReleaseImage(&grayA);
+	cvReleaseImage(&grayB);
+	cvReleaseImage(&imgA);
+	cvReleaseImage(&imgB);
+	cvReleaseHist(&histA);
+	cvReleaseHist(&histB);
 
 	getch();
 	return 0;
