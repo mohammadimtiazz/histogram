@@ -1,5 +1,5 @@
 # histogram
-'histExample' presents source code for measuring histogram from images and plot them in cv Window!
+'histExample' presents source code for measuring histogram from images and plot them in cv Window! It can also compare two hostogram and meseaure how much similar/disimlar they are! 
 
 Helpful links:
 http://www.aishack.in/tutorials/drawing-histograms-opencv/
