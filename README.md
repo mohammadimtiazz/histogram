@@ -49,6 +49,6 @@ http://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_comparison
 
 
 
-"histStatistics" -> can measure MEAN and MODE of a single plane of color image or 2 dimensional gray image.
+"histStatistics" -> can measure MEAN, MODE and PERCENTILE of a single plane of color image or 2 dimensional gray image. Here the percentile feature measure energy of pixel >= 200. We can change this value or move that value in a upper and lower range too. 
 
 
