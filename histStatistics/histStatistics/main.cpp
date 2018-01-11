@@ -10,8 +10,9 @@ using namespace std;
 
 //struct has been used here for fetching multiple outputs from the function
 struct histStatistics{
-	int mode;
+	long mode;
 	double mean;
+	double percentile;
 };
 
 
@@ -21,14 +22,16 @@ struct histStatistics histParameters(int *histArray, const int totalBins){
 	struct histStatistics resultIndex;
 	double sumNum = 0.0;
 	double sumDum = 0.0;
-	int temp = 0;
-
+	long temp = 0;
+	double pTotal = 0.0;
+	int upLimit = 200;
+	//int downLimit = 255;
 
 	for (int i = 0; i < totalBins; i++){
 		//calculating numerator and denominator of mean
 		sumNum = sumNum + i * histArray[i]; // sum of product or weight
-		sumDum = sumDum + histArray[i];		// sum of bins
-
+		sumDum = sumDum + (double)histArray[i];		// sum of bins
+		
 		// looking for the bin with maximum occurances
 		if (histArray[i] > temp){
 			temp = histArray[i];
@@ -36,12 +39,22 @@ struct histStatistics histParameters(int *histArray, const int totalBins){
 		}
 		else{
 		}
+
+		//percentile calculation over 200
+		//this percentile calculation can be between a range of pixels too
+		// as like percentile calculation between pixel 100 to 200
+		if (i >= upLimit){
+			pTotal = pTotal + (double)histArray[i];
+		}
 	}
+
 	resultIndex.mean = sumNum / sumDum;
+	resultIndex.percentile = (pTotal*100)/(sumDum);
 
 	return resultIndex;
 
 }
+
 
 // creating histogram with fixed bin numbers 256
 void createHist(int rows, int cols, unsigned char **pGray, int *histArray){
@@ -50,7 +63,7 @@ void createHist(int rows, int cols, unsigned char **pGray, int *histArray){
 	{
 		for (int x = 0; x < cols; x++)
 		{
-			histArray[pGray[y][x]]++;
+			histArray[(int) pGray[y][x]]++;
 			
 		}
 	}
@@ -66,7 +79,7 @@ void createHist(int rows, int cols, unsigned char **pGray, int *histArray){
 
 
 int main(){
-	IplImage *img = cvLoadImage("cameraman.png");
+	IplImage *img = cvLoadImage("Raw_Image0__4__halo333__laplacian0.597702__242__0.pgm", 0);
 
 	//check images has been read properly or not
 	if(img){
@@ -112,6 +125,8 @@ int main(){
 
 	cout << "ModeX: " << result.mode << endl;
 	cout << "MeanX: " << result.mean << endl;
+	cout << "PercentileX: " << result.percentile << endl;
+
 
 
 	getch();
